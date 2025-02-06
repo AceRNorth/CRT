@@ -3,6 +3,7 @@
 #include "GDRelease.h"
 #include "Patch.h"
 #include "random.h"
+#include "globals.h"
 
 /**
  * Releases the gene drive mosquitoes into the simulation area if it is time for release.

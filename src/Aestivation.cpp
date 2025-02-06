@@ -3,6 +3,7 @@
 #include "Aestivation.h"
 #include "random.h"
 #include "constants.h"
+#include "globals.h"
 
 /**
  * Aestivation constructor.

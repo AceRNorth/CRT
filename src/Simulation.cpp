@@ -10,6 +10,10 @@
 #include "Model.h"
 #include "Record.h"
 #include "inputval.h"
+#include "globals.h"
+
+#include <random>
+#include <algorithm>  // Required for std::shuffle
 
 /**
  * Simulation constructor.
@@ -126,36 +130,65 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 				std::stringstream linestream(line);
 				if (line.size() == 0) break;
 
-				double x, y;
+				double x, y,bd,rand_effect;
+				int type,ass;
 				char is_rel_site;
 				int err = 0;
 				if (!read_and_validate_type(linestream, x, "x" + std::to_string(i+1), "double")) err++;
 				if (!read_and_validate_type(linestream, y, "y" + std::to_string(i+1), "double")) err++;
-				if (!read_and_validate_type(linestream, is_rel_site, "is_rel_site" + std::to_string(i+1), "char")) err++;
+			//	if (!read_and_validate_type(linestream, is_rel_site, "is_rel_site" + std::to_string(i+1), "char")) err++;
+				if (!read_and_validate_type(linestream, bd, "build dens" + std::to_string(i+1), "double")) err++;
+				if (!read_and_validate_type(linestream, rand_effect, "random effect" + std::to_string(i+1), "double")) err++;
+				if (!read_and_validate_type(linestream, type, "patch type" + std::to_string(i+1), "int")) err++;
+				if (!read_and_validate_type(linestream, ass, "patch association" + std::to_string(i+1), "int")) err++;
 				
-				if (!(is_rel_site == 'y' || is_rel_site == 'n')) 
+		/*		if (!(is_rel_site == 'y' || is_rel_site == 'n')) 
 				{
 					std::cerr << "Error: the parameter is_rel_site" << std::to_string(i+1) << " contains an invalid value. ";
 					std::cerr << "Allowed values are 'y' or 'n'." << std::endl;
 					err++;
 				} 
-
+		*/
 				if (err == 0) {
 					temp_coords.push_back({x, y});
-					if (is_rel_site == 'y') {temp_rel_sites.push_back(i);}
+					building_dens.push_back(bd*rand_effect);
+					patch_type.push_back(type);
+				//	if (is_rel_site == 'y') {temp_rel_sites.push_back(i);}
+					if (type == 3) {temp_rel_sites.push_back(i);}
 				}
 			}
 		}
 		file.close();
 
-		if (temp_coords.size() != model_params->area->num_pat) {
+		if (temp_coords.size() != model_params->area->num_pat) 
+		{
 			std::cerr << "Error: the number of valid coordinates in the file does not match num_pat." << std::endl;
 		}
 		else {
+			std::vector<int> indices(temp_rel_sites.size());
+			std::iota(indices.begin(), indices.end(), 0);
+			if(temp_rel_sites.size()<num_rel_sites)
+				{
+					std::cerr << "Error: not enough potential release sites." << std::endl;
+					exit(1);
+				}
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::shuffle(indices.begin(), indices.end(), gen); // Shuffle indices randomly
+			for (int i = 0; i < num_rel_sites; ++i) 
+			{
+				release_sites.push_back(temp_rel_sites[indices[i]]); // Select the first shuffled indices
+			std::cout<<" release patch:  "<<temp_rel_sites[indices[i]]<<std::endl;
+			}
+
+
 			sites_coords = temp_coords;
-			release_sites = temp_rel_sites;
+		//	release_sites = temp_rel_sites;
 		}	
 	}
+		std::cerr<<" patch type length  "<<patch_type.size()<<std::endl;
+		std::cerr<<" build dens length  "<<building_dens.size()<<std::endl;
+		std::cerr<<" coords length  "<<sites_coords.size()<<std::endl;
 }
 
 /** 
@@ -400,7 +433,8 @@ void Simulation::run_reps()
 		model->initiate();
 		data.record_coords(model->get_sites());
 
-		for (int tt=0; tt <= max_t; ++tt) { // current day of the simulation 
+		for (int tt=start_t; tt <= max_t; ++tt) { // current day of the simulation 
+			today=tt;
 			model->run(tt);
 
 			if (data.is_rec_global_time(tt)) {

@@ -5,6 +5,7 @@
 #include <vector>
 #include <iomanip>
 #include "Record.h"
+#include "globals.h"
 
 /**
  * Record constructor.
@@ -116,14 +117,27 @@ void Record::output_totals(int day, long long int tot_J, long long int tot_M, lo
  */
 void Record::record_local(int day, const std::vector<Patch*> &sites) 
 {
-	for (int pat=0; pat < sites.size(); pat += rec_sites_freq) {
+/*	for (int pat=0; pat < sites.size(); pat += rec_sites_freq) {
 		local_data << day << "\t" << pat+1;
 		for (const auto& m_gen : sites[pat]->get_M()) {
 			local_data << "\t" << m_gen;
 		}
 		local_data << std::endl;
 	}
-}
+*/
+	for (int pat=0; pat < sites.size(); pat ++) 
+	{
+		if(patch_type[pat]>1)
+		{
+		local_data << day << "\t" << pat+1 << "\t" << patch_type[pat];
+		for (const auto& m_gen : sites[pat]->get_M()) {
+			local_data << "\t" << m_gen;
+		}
+		local_data << std::endl;
+		};
+	}
+
+	}
 
 /**
  * @brief Determines if it is time to record global data.

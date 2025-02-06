@@ -8,6 +8,7 @@
 #include "Dispersal.h"
 #include "GDRelease.h"
 #include "Aestivation.h"
+#include "globals.h"
 
 using namespace constants;
 
@@ -135,7 +136,8 @@ Model::Model(ModelParams* params, const std::array<std::array<std::array <double
 		side_y = y_max - y_min;
 
 		for (int i=0; i < num_pat; ++i) {
-			Patch* pp = new Patch(this, params->life, alpha0(), coords[i]);
+			double bd=building_dens[i]*alpha0();
+			Patch* pp = new Patch(this, params->life, bd, coords[i]);
 			sites.push_back(pp);
 		}
 	}

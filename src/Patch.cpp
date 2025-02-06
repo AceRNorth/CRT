@@ -4,6 +4,7 @@
 #include "Patch.h"
 #include "random.h"
 #include "constants.h"
+#include "globals.h"
 
 /**
  * @brief Patch constructor for randomly generated coordinates.
@@ -279,6 +280,7 @@ void Patch::juv_get_older()
 void Patch::adults_die()
 {
 	double mu_a = params->mu_a;
+	double mu_a_temp = mu_a_list[today];
 	for (int i=0; i < constants::num_gen; ++i) {
 		long long int m = random_binomial(M[i], mu_a); // number of males that die
 		M[i] -= m;
@@ -287,7 +289,7 @@ void Patch::adults_die()
 		V[i] -= v;	
 
 		for (int j=0; j < constants::num_gen; ++j) {
-			long long int f = random_binomial(F[i][j], mu_a);
+			long long int f = random_binomial(F[i][j], mu_a_temp);
 			F[i][j] -= f;
 		}
 	}

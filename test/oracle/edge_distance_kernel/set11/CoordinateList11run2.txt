@@ -1,3 +1,0 @@
-Coordinate list of the sites
-Site	x	y
-1	0.1730546070834204	0.4824106080234523

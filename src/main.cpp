@@ -10,6 +10,7 @@
 #include "inputval.h"
 #include "InputParams.h"
 #include "sets.h"
+#include "globals.h"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 

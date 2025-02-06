@@ -5,11 +5,13 @@
 #include "inputval.h"
 #include "constants.h"
 #include "Params.h"
+#include "globals.h"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-int main() {
+	int start_t = 0;
 
+int main() {
     //std::string params_filename; 
     //std::cin >> params_filename;
 
@@ -18,6 +20,7 @@ int main() {
     std::string coords_filename; 
     std::string rainfall_filename; 
     std::string rel_times_filename;
+    std::string mu_a_filename;
 
     // input parameters
 	// progression parameters
@@ -108,9 +111,11 @@ int main() {
     std::cin >> set_label;
     std::cin >> boundary_type;
     std::cin >> disp_type;
+    std::cin >> start_t;
     std::cin >> coords_filename;
     std::cin >> rainfall_filename; 
     std::cin >> rel_times_filename;
+    std::cin >> mu_a_filename;
 
     InputParams params;
     params.num_runs = num_runs;
@@ -147,6 +152,7 @@ int main() {
     params.rec_interval_local = rec_interval_local;
     params.rec_sites_freq = rec_sites_freq;
     params.set_label = set_label;
+    num_rel_sites=num_driver_sites;
 
     BoundaryType boundary;
     if (boundary_type == 't') {
@@ -185,6 +191,26 @@ int main() {
         auto rel_times_filepath = std::filesystem::path(rel_times_filename);
         simulation.set_release_times(rel_times_filepath);
     }
+
+
+	/*-----------------input file with adult female mortality data--------------------------*/
+    if (mu_a_filename != "none") {
+		std::ostringstream ggg;
+		ggg.str(mu_a_filename);
+		std::ifstream mortdata(ggg.str().c_str()); 
+		double rr;
+		std::string line ="";
+		std::string cell;
+		while(std::getline(mortdata, line ))
+		{       
+			std::stringstream lineStream(line);
+			std::getline(lineStream,cell,',');
+			rr=std::strtod(cell.c_str(),NULL);
+			mu_a_list.push_back(rr);
+		};
+	    }
+	/*--------------------------------------------------------------------------------------*/
+
     simulation.run_reps();
 
     return 0;

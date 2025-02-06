@@ -1,5 +1,6 @@
 #include <cmath>
 #include "BoundaryStrategy.h"
+#include "globals.h"
 
 /**
  * Calculates the shortest periodic distance between two points.

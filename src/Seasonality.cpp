@@ -2,6 +2,7 @@
 #include <vector>
 #include "Seasonality.h"
 #include "constants.h"
+#include "globals.h"
 
 /**
  * SineRainfall constructor.

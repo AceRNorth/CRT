@@ -8,6 +8,7 @@
 #include "random.h"
 #include "constants.h"
 #include <iostream>
+#include "globals.h"
 
 /**
  * Dispersal constructor. 

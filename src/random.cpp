@@ -5,6 +5,7 @@
 #include <algorithm> 
 #include "random.h"
 #include "constants.h"
+#include "globals.h"
 
 // random number seed
 std::random_device rd;
