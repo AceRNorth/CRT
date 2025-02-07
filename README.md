@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # GeneralMetapop
 GeneralMetapop is a metapopulation simulation program modelling mosquito populations and their response to gene drive release. The main aims of the project are to create a model program that is maintainable, extensible and widely accessible.
 
@@ -129,3 +130,7 @@ The full documentation website can be found [here](https://acernorth.github.io/G
    ./gdsimsapp
    ```
 
+=======
+# CRT
+Codes for CRT model
+>>>>>>> 059766d523d68483feb253ad3698a7a5e6ab2aca
