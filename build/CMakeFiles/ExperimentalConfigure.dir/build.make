@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop
+CMAKE_SOURCE_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build
+CMAKE_BINARY_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build
 
 # Utility rule file for ExperimentalConfigure.
 
@@ -71,6 +71,6 @@ CMakeFiles/ExperimentalConfigure.dir/clean:
 .PHONY : CMakeFiles/ExperimentalConfigure.dir/clean
 
 CMakeFiles/ExperimentalConfigure.dir/depend:
-	cd /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build/CMakeFiles/ExperimentalConfigure.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build/CMakeFiles/ExperimentalConfigure.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ExperimentalConfigure.dir/depend
 

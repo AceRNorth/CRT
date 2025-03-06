@@ -124,7 +124,7 @@ void Record::record_local(int day, const std::vector<Patch*> &sites)
 		}
 		local_data << std::endl;
 	}
-*/
+
 	for (int pat=0; pat < sites.size(); pat ++) 
 	{
 		if(patch_type[pat]>1)
@@ -134,10 +134,25 @@ void Record::record_local(int day, const std::vector<Patch*> &sites)
 			local_data << "\t" << m_gen;
 		}
 		local_data << std::endl;
-		};
+		}
 	}
-
+	*/
+	std::vector<int> count(num_output_sites,0);
+	std::vector<int> freq(num_output_sites,0);
+	for (int pat=0; pat < sites.size(); pat ++) 
+	{
+		if(patch_index[pat]>0)
+		{
+		const auto& M = sites[pat]->get_M();
+		count[patch_index[pat]-1]+=M[0]+M[1]+M[3];
+		freq[patch_index[pat]-1]+=(0.5*M[1]+M[2]+0.5*M[5])/(1.0*(M[0]+M[1]+M[2]+M[3]+M[4]+M[5]));
+		}
 	}
+	for (int pat=0; pat < count.size(); pat ++) 
+	{
+		local_data << day << "\t" << pat+1 << "\t" << count[pat] << "\t" <<freq[pat]<<std::endl;
+	}
+}
 
 /**
  * @brief Determines if it is time to record global data.

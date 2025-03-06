@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop
+CMAKE_SOURCE_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build
+CMAKE_BINARY_DIR = /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build
 
 # Utility rule file for NightlyCoverage.
 
@@ -71,6 +71,6 @@ CMakeFiles/NightlyCoverage.dir/clean:
 .PHONY : CMakeFiles/NightlyCoverage.dir/clean
 
 CMakeFiles/NightlyCoverage.dir/depend:
-	cd /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/GeneralMetapop/build/CMakeFiles/NightlyCoverage.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build /home/biology/zool0973/Dropbox/FieldTrials/CRT/CRTModel/build/CMakeFiles/NightlyCoverage.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/NightlyCoverage.dir/depend
 

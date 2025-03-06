@@ -131,7 +131,7 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 				if (line.size() == 0) break;
 
 				double x, y,bd,rand_effect;
-				int type,ass;
+				int type,ass,index;
 				char is_rel_site;
 				int err = 0;
 				if (!read_and_validate_type(linestream, x, "x" + std::to_string(i+1), "double")) err++;
@@ -141,6 +141,7 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 				if (!read_and_validate_type(linestream, rand_effect, "random effect" + std::to_string(i+1), "double")) err++;
 				if (!read_and_validate_type(linestream, type, "patch type" + std::to_string(i+1), "int")) err++;
 				if (!read_and_validate_type(linestream, ass, "patch association" + std::to_string(i+1), "int")) err++;
+				if (!read_and_validate_type(linestream, index, "release patch index" + std::to_string(i+1), "int")) err++;
 				
 		/*		if (!(is_rel_site == 'y' || is_rel_site == 'n')) 
 				{
@@ -153,12 +154,14 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 					temp_coords.push_back({x, y});
 					building_dens.push_back(bd*rand_effect);
 					patch_type.push_back(type);
+					patch_index.push_back(index);
 				//	if (is_rel_site == 'y') {temp_rel_sites.push_back(i);}
 					if (type == 3) {temp_rel_sites.push_back(i);}
 				}
 			}
 		}
 		file.close();
+		num_output_sites=temp_rel_sites.size();
 
 		if (temp_coords.size() != model_params->area->num_pat) 
 		{
@@ -189,6 +192,7 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 		std::cerr<<" patch type length  "<<patch_type.size()<<std::endl;
 		std::cerr<<" build dens length  "<<building_dens.size()<<std::endl;
 		std::cerr<<" coords length  "<<sites_coords.size()<<std::endl;
+		std::cerr<<" num output sites  "<<num_output_sites<<std::endl;
 }
 
 /** 
