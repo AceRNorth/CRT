@@ -138,19 +138,35 @@ void Record::record_local(int day, const std::vector<Patch*> &sites)
 	}
 	*/
 	std::vector<int> count(num_output_sites,0);
-	std::vector<int> freq(num_output_sites,0);
+	std::vector<int> tot(num_output_sites,0);
+	std::vector<int> gd(num_output_sites,0);
+//	std::vector<double> freq(num_output_sites,0);
 	for (int pat=0; pat < sites.size(); pat ++) 
 	{
 		if(patch_index[pat]>0)
 		{
-		const auto& M = sites[pat]->get_M();
-		count[patch_index[pat]-1]+=M[0]+M[1]+M[3];
-		freq[patch_index[pat]-1]+=(0.5*M[1]+M[2]+0.5*M[5])/(1.0*(M[0]+M[1]+M[2]+M[3]+M[4]+M[5]));
+//		const auto& M = sites[pat]->get_M();
+//		count[patch_index[pat]-1]+=M[0]+M[1]+M[3];
+//		tot[patch_index[pat]-1]+=2*(M[0]+M[1]+M[2]+M[3]+M[4]+M[5]);
+//		gd[patch_index[pat]-1]+=M[1]+2*M[2]+M[5];
+//
+		const auto& F = sites[pat]->get_F();
+		count[patch_index[pat]-1]+= F[0][0]+ F[0][1]+ F[0][2]+ F[0][3]+ F[0][4]+ F[0][5]+ F[1][0]+ F[1][1]+ F[1][2]+ F[1][3]+ F[1][4]+ F[1][5]+ F[3][0]+ F[3][1]+ F[3][2]+ F[3][3]+ F[3][4]+ F[3][5];
+
+		tot[patch_index[pat]-1]+=2*( F[0][0]+ F[0][1]+ F[0][2]+ F[0][3]+ F[0][4]+ F[0][5]+ F[1][0]+ F[1][1]+ F[1][2]+ F[1][3]+ F[1][4]+ F[1][5]+ F[2][0]+ F[2][1]+ F[2][2]+ F[2][3]+ F[2][4]+ F[2][5]+ F[3][0]+ F[3][1]+ F[3][2]+ F[3][3]+ F[3][4]+ F[3][5]+ F[4][0]+ F[4][1]+ F[4][2]+ F[4][3]+ F[4][4]+ F[4][5]+ F[5][0]+ F[5][1]+ F[5][2]+ F[5][3]+ F[5][4]+ F[5][5]);
+
+
+		gd[patch_index[pat]-1]+= F[1][0]+ F[1][1]+ F[1][2]+ F[1][3]+ F[1][4]+ F[1][5]+ 2*(F[2][0]+ F[2][1]+ F[2][2]+ F[2][3]+ F[2][4]+ F[2][5])+ F[5][0]+ F[5][1]+ F[5][2]+ F[5][3]+ F[5][4]+ F[5][5];
+//
+//
+//
+//		freq[patch_index[pat]-1]+=(0.5*M[1]+M[2]+0.5*M[5])/(1.0+1.0*(M[0]+M[1]+M[2]+M[3]+M[4]+M[5]));
 		}
 	}
 	for (int pat=0; pat < count.size(); pat ++) 
 	{
-		local_data << day << "\t" << pat+1 << "\t" << count[pat] << "\t" <<freq[pat]<<std::endl;
+	double freq=1.0*gd[pat]/(1.0+1.0*tot[pat]);
+		local_data << day << "\t" << pat+1 << "\t" << count[pat] << "\t" << freq<<std::endl;
 	}
 }
 

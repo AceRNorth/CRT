@@ -116,6 +116,7 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 {
 	sites_coords.clear();
 	release_sites.clear();
+	num_output_sites=0;
 
 	if (!std::filesystem::exists(filepath) || !std::filesystem::is_regular_file(filepath)) {
 		std::cerr << "Invalid filename. To enter a filename, the file should be in the build directory. Otherwise, the filepath should be provided (either relative to 'build' or absolute)." << std::endl;
@@ -156,14 +157,16 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 					patch_type.push_back(type);
 					patch_index.push_back(index);
 				//	if (is_rel_site == 'y') {temp_rel_sites.push_back(i);}
-					if (type == 3) {temp_rel_sites.push_back(i);}
+				//	if (type == 3) {temp_rel_sites.push_back(i);}
+					if (type == 4) {release_sites.push_back(i);num_output_sites++;}
+					if (type == 5) {num_output_sites++;}
 				}
 			}
 		}
 		file.close();
-		num_output_sites=temp_rel_sites.size();
+		//num_output_sites=temp_rel_sites.size();
 
-		if (temp_coords.size() != model_params->area->num_pat) 
+		/*if (temp_coords.size() != model_params->area->num_pat) 
 		{
 			std::cerr << "Error: the number of valid coordinates in the file does not match num_pat." << std::endl;
 		}
@@ -188,11 +191,16 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 			sites_coords = temp_coords;
 		//	release_sites = temp_rel_sites;
 		}	
+	*/
+	//		sites_coords = temp_coords;
 	}
 		std::cerr<<" patch type length  "<<patch_type.size()<<std::endl;
 		std::cerr<<" build dens length  "<<building_dens.size()<<std::endl;
 		std::cerr<<" coords length  "<<sites_coords.size()<<std::endl;
 		std::cerr<<" num output sites  "<<num_output_sites<<std::endl;
+		std::cerr<<" num release sites  "<<release_sites.size()<<std::endl;
+
+		for(int i=0;i<release_sites.size();i++)std::cout<<release_sites[i]<<std::endl;
 }
 
 /** 
