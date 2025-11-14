@@ -18,7 +18,7 @@ class Model;
 class Patch {
 public:
 	Patch(Model* mod, LifeParams* par, double a0, double side_x, double side_y); // *
-	Patch(Model* mod, LifeParams* par, double a0, Point point);
+	Patch(Model* mod, LifeParams* par, double a0, Point point, double hum);
 	void populate(int initial_WJ, int initial_WM, int initial_WV, int initial_WF);
 
 	Point get_coords() const;
@@ -63,6 +63,9 @@ private:
 	double alpha0; /**< Baseline contribution to the carrying capacity */ 
 
 	Point coords; /**< Patch coordinates */ 
+
+	double humandens;
+
 	std::array<std::array<long long int, constants::max_dev+1>, constants::num_gen> J; /**< Number of juvenile mosquitoes in the patch, divided by genotype and age group. @note The age groups are ordered from oldest (0 days left to eclosion) to youngest (max_dev - 1 days left). */
 	std::array<long long int, constants::num_gen> M; /**< Number of male mosquitoes in the patch, divided by genotype. */ 
 	std::array<long long int, constants::num_gen> V; /**< Number of virgin (unmated) female mosquitoes, divided by genotype. */ 

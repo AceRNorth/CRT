@@ -116,6 +116,7 @@ int main() {
     std::cin >> rainfall_filename; 
     std::cin >> rel_times_filename;
     std::cin >> mu_a_filename;
+    std::cin >> OutputType;
 
     InputParams params;
     params.num_runs = num_runs;
@@ -152,7 +153,7 @@ int main() {
     params.rec_interval_local = rec_interval_local;
     params.rec_sites_freq = rec_sites_freq;
     params.set_label = set_label;
-    num_rel_sites=num_driver_sites;
+   // num_rel_sites=num_driver_sites;
 
     BoundaryType boundary;
     if (boundary_type == 't') {

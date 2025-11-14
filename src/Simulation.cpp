@@ -84,6 +84,7 @@ Simulation::Simulation(InputParams input)
 	set_inheritance(mendelian);
 
 	sites_coords.clear();
+	humans.clear();
 	release_sites.clear();
 	boundary_type = BoundaryType::Toroid;
 	disp_type = DispersalType::DistanceKernel;
@@ -115,8 +116,8 @@ Simulation::~Simulation()
 void Simulation::set_coords(const std::filesystem::path& filepath) 
 {
 	sites_coords.clear();
+	humans.clear();
 	release_sites.clear();
-	num_output_sites=0;
 
 	if (!std::filesystem::exists(filepath) || !std::filesystem::is_regular_file(filepath)) {
 		std::cerr << "Invalid filename. To enter a filename, the file should be in the build directory. Otherwise, the filepath should be provided (either relative to 'build' or absolute)." << std::endl;
@@ -132,17 +133,15 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 				if (line.size() == 0) break;
 
 				double x, y,bd,rand_effect;
-				int type,ass,index;
+				int type,ass,index,relnum,tert;
 				char is_rel_site;
 				int err = 0;
 				if (!read_and_validate_type(linestream, x, "x" + std::to_string(i+1), "double")) err++;
 				if (!read_and_validate_type(linestream, y, "y" + std::to_string(i+1), "double")) err++;
-			//	if (!read_and_validate_type(linestream, is_rel_site, "is_rel_site" + std::to_string(i+1), "char")) err++;
 				if (!read_and_validate_type(linestream, bd, "build dens" + std::to_string(i+1), "double")) err++;
-				if (!read_and_validate_type(linestream, rand_effect, "random effect" + std::to_string(i+1), "double")) err++;
 				if (!read_and_validate_type(linestream, type, "patch type" + std::to_string(i+1), "int")) err++;
-				if (!read_and_validate_type(linestream, ass, "patch association" + std::to_string(i+1), "int")) err++;
-				if (!read_and_validate_type(linestream, index, "release patch index" + std::to_string(i+1), "int")) err++;
+				if (!read_and_validate_type(linestream, rand_effect, "random effect" + std::to_string(i+1), "double")) err++;
+				if (!read_and_validate_type(linestream, tert, "prevalence tertile" + std::to_string(i+1), "int")) err++;
 				
 		/*		if (!(is_rel_site == 'y' || is_rel_site == 'n')) 
 				{
@@ -153,51 +152,18 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 		*/
 				if (err == 0) {
 					temp_coords.push_back({x, y});
-					building_dens.push_back(bd*rand_effect);
+				//	building_dens.push_back(bd*rand_effect);
+					humans.push_back(bd*rand_effect);
 					patch_type.push_back(type);
-					patch_index.push_back(index);
-				//	if (is_rel_site == 'y') {temp_rel_sites.push_back(i);}
-				//	if (type == 3) {temp_rel_sites.push_back(i);}
-					if (type == 4) {release_sites.push_back(i);num_output_sites++;}
-					if (type == 5) {num_output_sites++;}
+					patch_tertile.push_back(tert);
+					if (type == 5)  release_sites.push_back(i); 
 				}
 			}
 		}
 		file.close();
-		//num_output_sites=temp_rel_sites.size();
-
-		/*if (temp_coords.size() != model_params->area->num_pat) 
-		{
-			std::cerr << "Error: the number of valid coordinates in the file does not match num_pat." << std::endl;
-		}
-		else {
-			std::vector<int> indices(temp_rel_sites.size());
-			std::iota(indices.begin(), indices.end(), 0);
-			if(temp_rel_sites.size()<num_rel_sites)
-				{
-					std::cerr << "Error: not enough potential release sites." << std::endl;
-					exit(1);
-				}
-			std::random_device rd;
-			std::mt19937 gen(rd());
-			std::shuffle(indices.begin(), indices.end(), gen); // Shuffle indices randomly
-			for (int i = 0; i < num_rel_sites; ++i) 
-			{
-				release_sites.push_back(temp_rel_sites[indices[i]]); // Select the first shuffled indices
-			std::cout<<" release patch:  "<<temp_rel_sites[indices[i]]<<std::endl;
-			}
-
-
-			sites_coords = temp_coords;
-		//	release_sites = temp_rel_sites;
-		}	
-	*/
-	//		sites_coords = temp_coords;
+		sites_coords = temp_coords;
 	}
-		std::cerr<<" patch type length  "<<patch_type.size()<<std::endl;
-		std::cerr<<" build dens length  "<<building_dens.size()<<std::endl;
 		std::cerr<<" coords length  "<<sites_coords.size()<<std::endl;
-		std::cerr<<" num output sites  "<<num_output_sites<<std::endl;
 		std::cerr<<" num release sites  "<<release_sites.size()<<std::endl;
 
 		for(int i=0;i<release_sites.size();i++)std::cout<<release_sites[i]<<std::endl;
@@ -436,10 +402,10 @@ void Simulation::run_reps()
 	for (int rep=1; rep <= num_runs; ++rep) {
 		Model* model;
 		if (!((input_rainfall_params->rainfall).empty())) {
-			model = new Model(model_params, inher_fraction, input_rainfall_params, alpha0_mean, alpha0_variance, release_sites, boundary_type, disp_type, sites_coords);
+			model = new Model(model_params, inher_fraction, input_rainfall_params, alpha0_mean, alpha0_variance, release_sites, boundary_type, disp_type, sites_coords,humans);
 		}
 		else {
-			model = new Model(model_params, inher_fraction, sine_rainfall_params, alpha0_mean, alpha0_variance, release_sites, boundary_type, disp_type, sites_coords);
+			model = new Model(model_params, inher_fraction, sine_rainfall_params, alpha0_mean, alpha0_variance, release_sites, boundary_type, disp_type, sites_coords,humans);
 		}
 		Record data(rec_params, rep);
 		model->initiate();

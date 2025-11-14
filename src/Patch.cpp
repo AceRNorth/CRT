@@ -5,6 +5,7 @@
 #include "random.h"
 #include "constants.h"
 #include "globals.h"
+#include <iostream> // for error messages
 
 /**
  * @brief Patch constructor for randomly generated coordinates.
@@ -25,6 +26,7 @@ Patch::Patch(Model* mod, LifeParams* par, double a0, double side_x, double side_
 	double x = random_real() * side_x;
 	double y = random_real() * side_y;
 	coords = {x, y};
+	humandens=1;
 
 	for (int i=0; i < constants::num_gen; ++i) {
 		for (int a=0; a < constants::max_dev + 1; ++a) {
@@ -47,12 +49,13 @@ Patch::Patch(Model* mod, LifeParams* par, double a0, double side_x, double side_
  * @param[in] a0 	alpha0 carrying capacity baseline
  * @param[in] point	patch coordinates
  */
-Patch::Patch(Model* mod, LifeParams* par, double a0, Point point) 
+Patch::Patch(Model* mod, LifeParams* par, double a0, Point point, double humans) 
 {
 	model = mod;
 	params = par;
 	alpha0 = a0;
 	coords = point;
+	humandens=humans;
 
 	// include to be able to compare data to test data when testing
 	double x = random_real();
@@ -381,6 +384,8 @@ void Patch::update_comp()
 {
 	int d = model->get_day();
 	double alpha = model->get_alpha(alpha0);
+	alpha*=humandens;
+	std::cout<<humandens<<std::endl;
 	long long int tot_J = calculate_tot_J();
 	comp = (1 - (params->mu_j)) * std::pow(alpha / (alpha + tot_J), params->comp_power);
 }

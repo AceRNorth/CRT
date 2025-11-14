@@ -43,6 +43,7 @@ private:
 
 	// additional parameter options
 	std::vector<Point> sites_coords; /**< 2D coordinates for the sites on the simulated square. */ 
+	std::vector<double> humans; /**< 2D coordinates for the sites on the simulated square. */ 
 	std::vector<int> release_sites; /**< Indices relative to coords vector for the gene drive release sites. */ 
 //	double building_dens;
 	BoundaryType boundary_type;

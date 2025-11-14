@@ -25,8 +25,8 @@ class Seasonality;
  */ 
 class Model {
 public:
-	Model(ModelParams *params, const std::array<std::array<std::array <double, constants::num_gen>, constants::num_gen>, constants::num_gen> &inher_frac, SineRainfallParams *season, double a0_mean, double a0_var, std::vector<int> rel_sites = {}, BoundaryType boundary = BoundaryType::Toroid, DispersalType disp_type = DispersalType::DistanceKernel, std::vector<Point> coords = {});
-	Model(ModelParams *params, const std::array<std::array<std::array <double, constants::num_gen>, constants::num_gen>, constants::num_gen> &inher_frac, InputRainfallParams *season, double a0_mean, double a0_var, std::vector<int> rel_sites = {}, BoundaryType boundary = BoundaryType::Toroid, DispersalType disp_type = DispersalType::DistanceKernel, std::vector<Point> coords = {});
+	Model(ModelParams *params, const std::array<std::array<std::array <double, constants::num_gen>, constants::num_gen>, constants::num_gen> &inher_frac, SineRainfallParams *season, double a0_mean, double a0_var, std::vector<int> rel_sites = {}, BoundaryType boundary = BoundaryType::Toroid, DispersalType disp_type = DispersalType::DistanceKernel, std::vector<Point> coords = {},std::vector<double> humans = {});
+	Model(ModelParams *params, const std::array<std::array<std::array <double, constants::num_gen>, constants::num_gen>, constants::num_gen> &inher_frac, InputRainfallParams *season, double a0_mean, double a0_var, std::vector<int> rel_sites = {}, BoundaryType boundary = BoundaryType::Toroid, DispersalType disp_type = DispersalType::DistanceKernel, std::vector<Point> coords = {},std::vector<double> humans = {});
 	
 	~Model();
 	void initiate();

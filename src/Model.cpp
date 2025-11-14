@@ -26,7 +26,7 @@ using namespace constants;
  * @param[in] coords		site coordinates vector
  */
 Model::Model(ModelParams* params, const std::array<std::array<std::array <double, constants::num_gen>, constants::num_gen>, constants::num_gen> &inher_frac, SineRainfallParams* season,
- double a0_mean, double a0_var, std::vector<int> rel_sites, BoundaryType boundary, DispersalType disp_type, std::vector<Point> coords)
+ double a0_mean, double a0_var, std::vector<int> rel_sites, BoundaryType boundary, DispersalType disp_type, std::vector<Point> coords,std::vector<double>humandens)
 {
 	num_pat = params->area->num_pat;
 	initial_pops = params->initial;
@@ -54,7 +54,7 @@ Model::Model(ModelParams* params, const std::array<std::array<std::array <double
 		side_y = y_max - y_min;
 	
 		for (int i=0; i < num_pat; ++i) {
-			Patch* pp = new Patch(this, params->life, alpha0(), coords[i]);
+			Patch* pp = new Patch(this, params->life, alpha0(), coords[i],humandens[i]);
 			sites.push_back(pp);
 		}
 	}
@@ -109,7 +109,7 @@ Model::Model(ModelParams* params, const std::array<std::array<std::array <double
  * @param[in] coords		site coordinates vector
  */
 Model::Model(ModelParams* params, const std::array<std::array<std::array <double, constants::num_gen>, constants::num_gen>, constants::num_gen> &inher_frac, InputRainfallParams *season,
- double a0_mean, double a0_var, std::vector<int> rel_sites, BoundaryType boundary, DispersalType disp_type, std::vector<Point> coords)
+ double a0_mean, double a0_var, std::vector<int> rel_sites, BoundaryType boundary, DispersalType disp_type, std::vector<Point> coords,std::vector<double>humandens)
 {
 	num_pat = params->area->num_pat;
 	initial_pops = params->initial;
@@ -136,8 +136,9 @@ Model::Model(ModelParams* params, const std::array<std::array<std::array <double
 		side_y = y_max - y_min;
 
 		for (int i=0; i < num_pat; ++i) {
-			double bd=building_dens[i]*alpha0();
-			Patch* pp = new Patch(this, params->life, bd, coords[i]);
+		//	double bd=building_dens[i]*alpha0();
+		//	Patch* pp = new Patch(this, params->life, bd, coords[i],humandens[i]);
+			Patch* pp = new Patch(this, params->life, alpha0(), coords[i],humandens[i]);
 			sites.push_back(pp);
 		}
 	}
