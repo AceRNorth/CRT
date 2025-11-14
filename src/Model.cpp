@@ -136,8 +136,6 @@ Model::Model(ModelParams* params, const std::array<std::array<std::array <double
 		side_y = y_max - y_min;
 
 		for (int i=0; i < num_pat; ++i) {
-		//	double bd=building_dens[i]*alpha0();
-		//	Patch* pp = new Patch(this, params->life, bd, coords[i],humandens[i]);
 			Patch* pp = new Patch(this, params->life, alpha0(), coords[i],humandens[i]);
 			sites.push_back(pp);
 		}

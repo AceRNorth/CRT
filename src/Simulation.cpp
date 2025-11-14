@@ -143,16 +143,8 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 				if (!read_and_validate_type(linestream, rand_effect, "random effect" + std::to_string(i+1), "double")) err++;
 				if (!read_and_validate_type(linestream, tert, "prevalence tertile" + std::to_string(i+1), "int")) err++;
 				
-		/*		if (!(is_rel_site == 'y' || is_rel_site == 'n')) 
-				{
-					std::cerr << "Error: the parameter is_rel_site" << std::to_string(i+1) << " contains an invalid value. ";
-					std::cerr << "Allowed values are 'y' or 'n'." << std::endl;
-					err++;
-				} 
-		*/
 				if (err == 0) {
 					temp_coords.push_back({x, y});
-				//	building_dens.push_back(bd*rand_effect);
 					humans.push_back(bd*rand_effect);
 					patch_type.push_back(type);
 					patch_tertile.push_back(tert);
