@@ -90,22 +90,6 @@ Point.h
 
 ../includes/Point.h
 
-../includes/Record.h
-sstream
--
-fstream
--
-vector
--
-array
--
-constants.h
-../includes/constants.h
-Patch.h
-../includes/Patch.h
-Params.h
-../includes/Params.h
-
 ../includes/Seasonality.h
 vector
 -
@@ -118,21 +102,29 @@ Params.h
 vector
 -
 
-/home/biology/zool0973/Dropbox/SpatialModelRepo/src/Record.cpp
-filesystem
+../includes/random.h
+vector
 -
-iostream
+array
 -
-sstream
+constants.h
+../includes/constants.h
+
+/home/biology/zool0973/Dropbox/SpatialModelRepo/src/Patch.cpp
+cmath
 -
-fstream
+array
 -
 vector
 -
-iomanip
--
-Record.h
-/home/biology/zool0973/Dropbox/SpatialModelRepo/src/Record.h
+Patch.h
+/home/biology/zool0973/Dropbox/SpatialModelRepo/src/Patch.h
+random.h
+/home/biology/zool0973/Dropbox/SpatialModelRepo/src/random.h
+constants.h
+/home/biology/zool0973/Dropbox/SpatialModelRepo/src/constants.h
 globals.h
 /home/biology/zool0973/Dropbox/SpatialModelRepo/src/globals.h
+iostream
+-
 

@@ -293,6 +293,7 @@ void Patch::adults_die()
 
 		for (int j=0; j < constants::num_gen; ++j) {
 			long long int f = random_binomial(F[i][j], mu_a_temp);
+	//		long long int f = random_binomial(F[i][j], mu_a);
 			F[i][j] -= f;
 		}
 	}

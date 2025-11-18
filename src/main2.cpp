@@ -115,7 +115,7 @@ int main() {
     std::cin >> coords_filename;
     std::cin >> rainfall_filename; 
     std::cin >> rel_times_filename;
-    std::cin >> mu_a_filename;
+//    std::cin >> mu_a_filename;
     std::cin >> OutputType;
 
     InputParams params;
@@ -195,6 +195,8 @@ int main() {
 
 
 	/*-----------------input file with adult female mortality data--------------------------*/
+    /*-------------this is for running CRT against Imperial malaria model with variable female mortality input---------*/
+    
     if (mu_a_filename != "none") {
 		std::ostringstream ggg;
 		ggg.str(mu_a_filename);
@@ -210,7 +212,8 @@ int main() {
 			mu_a_list.push_back(rr);
 		};
 	    }
-	/*--------------------------------------------------------------------------------------*/
+	
+    /*--------------------------------------------------------------------------------------*/
 
     simulation.run_reps();
 
