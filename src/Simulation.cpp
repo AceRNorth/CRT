@@ -158,7 +158,7 @@ void Simulation::set_coords(const std::filesystem::path& filepath)
 		std::cerr<<" coords length  "<<sites_coords.size()<<std::endl;
 		std::cerr<<" num release sites  "<<release_sites.size()<<std::endl;
 
-		for(int i=0;i<release_sites.size();i++)std::cout<<release_sites[i]<<std::endl;
+	//	for(int i=0;i<release_sites.size();i++)std::cout<<release_sites[i]<<std::endl;
 }
 
 /** 

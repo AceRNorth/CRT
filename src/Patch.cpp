@@ -385,7 +385,7 @@ void Patch::update_comp()
 	int d = model->get_day();
 	double alpha = model->get_alpha(alpha0);
 	alpha*=humandens;
-	std::cout<<humandens<<std::endl;
+//	std::cout<<humandens<<std::endl;
 	long long int tot_J = calculate_tot_J();
 	comp = (1 - (params->mu_j)) * std::pow(alpha / (alpha + tot_J), params->comp_power);
 }

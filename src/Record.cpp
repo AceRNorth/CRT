@@ -37,10 +37,11 @@ Record::Record(RecordParams* rec_params, int rep)
 	os3 << "CoordinateList" << set_label << "run" << rep_label << ".txt";
 	coord_list.open(os3.str());
 
-	local_data << "Male populations of each genotype at each site\n";
-	local_data << "Day" << "\t" << "Site" << "\t" << "WW" << "\t" << "WD" << "\t" << "DD" << "\t" << "WR" << "\t" << "RR" << "\t" << "DR" << std::endl;
+		//local_data << day << "\t" << pat+1 << "\t" << patch_type[pat] << "\t" << count << "\t" << freq<<std::endl;
+	local_data << "Population info at each site\n";
+	local_data << "Day" << "\t" << "Site" << "\t" << "patch type" << "\t" << "biting females" << "\t" << "gene drive freq." << std::endl;
 
-	global_data << "Total males of each genotype\n";
+	global_data << "Total females of each genotype\n";
 	global_data << "Day" << "\t" << "WW" << "\t" << "WD" << "\t" << "DD" << "\t" << "WR" << "\t" << "RR" << "\t" << "DR" << std::endl;
 
 	coord_list << "Coordinate list of the sites\n";
@@ -118,7 +119,6 @@ void Record::output_totals(int day, long long int tot_J, long long int tot_M, lo
 void Record::record_local(int day, const std::vector<Patch*> &sites) 
 {
 	int count,tot,gd,ind;
-//std::cout<<" R1 "<<std::endl;
 	for (int pat=0; pat < sites.size(); pat ++) 
 	{
 		if(patch_type[pat]>OutputType)
@@ -131,7 +131,6 @@ void Record::record_local(int day, const std::vector<Patch*> &sites)
 		local_data << day << "\t" << pat+1 << "\t" << patch_type[pat] << "\t" << count << "\t" << freq<<std::endl;
 		}
 	}
-//std::cout<<" R2 "<<std::endl;
 }
 
 /**

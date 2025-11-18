@@ -1,12 +1,3 @@
-InputData/
-Run/
-R1K/
-R1KB/
-R1KC/
 *.txt
-*.csv
 *.docx
 figs/
-PennyFigs/
-TESTruns/
-mathematica/
