@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/gdsimsapp.dir/src/main2.cpp.o"
-  "CMakeFiles/gdsimsapp.dir/src/main2.cpp.o.d"
   "gdsimsapp"
   "gdsimsapp.pdb"
 )
