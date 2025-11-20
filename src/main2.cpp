@@ -115,7 +115,7 @@ int main() {
     std::cin >> coords_filename;
     std::cin >> rainfall_filename; 
     std::cin >> rel_times_filename;
-//    std::cin >> mu_a_filename;
+    std::cin >> mu_a_filename;
     std::cin >> OutputType;
 
     InputParams params;
