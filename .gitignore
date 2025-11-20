@@ -1,3 +1,4 @@
 Runs/output_files/
 *.docx
 figs/
+build/
