@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     17876,        437]
-NotebookOptionsPosition[     17186,        417]
-NotebookOutlinePosition[     17608,        434]
-CellTagsIndexPosition[     17565,        431]
+NotebookDataLength[     18238,        446]
+NotebookOptionsPosition[     17546,        426]
+NotebookOutlinePosition[     17969,        443]
+CellTagsIndexPosition[     17926,        440]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -50,7 +50,15 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"dli", "=", 
-   RowBox[{"{", "0.02", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"{", "0.02", "}"}]}], ";", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "Function", " ", "giving", " ", "lifetime", " ", "probability", " ", "of",
+      " ", "dispersing"}], ",", " ", 
+    RowBox[{
+    "if", " ", "mortality", " ", "is", " ", "mu", " ", "and", " ", 
+     "dispersal", " ", "rate", " ", "is", " ", "p"}]}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -245,8 +253,9 @@ Cell[BoxData[{
    3.968314742392591*^9}, {3.972462761993046*^9, 3.9724627941816387`*^9}, {
    3.972462825819682*^9, 3.972462844314988*^9}, {3.972463018464273*^9, 
    3.972463224860229*^9}, {3.9724633910034847`*^9, 3.972463402035405*^9}, {
-   3.972463473749625*^9, 3.972463491480489*^9}},
- CellLabel->"In[28]:=",ExpressionUUID->"ceb1b6e4-6192-4dbe-83aa-0b4a4a729941"],
+   3.972463473749625*^9, 3.972463491480489*^9}, {3.9744441847754173`*^9, 
+   3.9744442082570257`*^9}},ExpressionUUID->"ceb1b6e4-6192-4dbe-83aa-\
+0b4a4a729941"],
 
 Cell[BoxData[
  RowBox[{"{", "0.12280701754385966`", "}"}]], "Print",
@@ -415,10 +424,10 @@ Cell[BoxData[
    3.972463629812602*^9}, 3.972473702501679*^9},
  CellLabel->"In[36]:=",ExpressionUUID->"5d7c6825-a6ff-4114-bfb7-597160cb3b32"]
 },
-WindowSize->{2580, 1010.25},
+WindowSize->{1440, 833.25},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 Magnification:>1.1 Inherited,
-FrontEndVersion->"14.3 for Linux x86 (64-bit) (July 8, 2025)",
+FrontEndVersion->"14.2 for Linux x86 (64-bit) (March 16, 2025)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"2b3afd63-5283-47c2-8546-a0fbe0ca5f4f"
 ]
@@ -435,10 +444,10 @@ CellTagsIndex->{}
 Notebook[{
 Cell[558, 20, 249, 4, 32, "Input",ExpressionUUID->"4ac04439-480b-4630-977f-0bdf1f91b8bb"],
 Cell[CellGroupData[{
-Cell[832, 28, 8564, 220, 417, "Input",ExpressionUUID->"ceb1b6e4-6192-4dbe-83aa-0b4a4a729941"],
-Cell[9399, 250, 237, 5, 25, "Print",ExpressionUUID->"b3b268c5-a87e-4b5a-9b2d-b3993c70f20a"]
+Cell[832, 28, 8924, 229, 440, "Input",ExpressionUUID->"ceb1b6e4-6192-4dbe-83aa-0b4a4a729941"],
+Cell[9759, 259, 237, 5, 25, "Print",ExpressionUUID->"b3b268c5-a87e-4b5a-9b2d-b3993c70f20a"]
 }, Open  ]],
-Cell[9651, 258, 7531, 157, 131, "Input",ExpressionUUID->"5d7c6825-a6ff-4114-bfb7-597160cb3b32"]
+Cell[10011, 267, 7531, 157, 221, "Input",ExpressionUUID->"5d7c6825-a6ff-4114-bfb7-597160cb3b32"]
 }
 ]
 *)
