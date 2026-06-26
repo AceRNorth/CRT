@@ -1,0 +1,987 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     35957,        979]
+NotebookOptionsPosition[     35479,        963]
+NotebookOutlinePosition[     35900,        980]
+CellTagsIndexPosition[     35857,        977]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "SetDirectory", 
+     "[", "\"\<~/Dropbox/FieldTrials/CRT/CRTModel/R1KE/output_files\>\"", 
+     "]"}], ";"}], "*)"}], "\n", "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ProcessData", "[", 
+     RowBox[{
+     "CoordsFileName_", ",", "NoDriveLocDataFileName_", ",", 
+      "DriveLocDataFileName_", ",", "NumSites_", ",", "OutputFile_"}], "]"}], 
+    ":=", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "coo", ",", "WTloc", ",", "sites", ",", "max", ",", "ter", ",", "pop", 
+        ",", "rand", ",", "loc", ",", "freqCor", ",", "freqMe1", ",", 
+        "freqMe2", ",", 
+        RowBox[{"zz1", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{
+              RowBox[{"3", " ", "365"}], "+", "120"}], ",", 
+             RowBox[{
+              RowBox[{"3", " ", "365"}], "+", "330"}]}], "}"}]}], "]"}]}], ",", 
+        RowBox[{"zz2", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{
+              RowBox[{"4", " ", "365"}], "+", "120"}], ",", 
+             RowBox[{
+              RowBox[{"4", " ", "365"}], "+", "330"}]}], "}"}]}], "]"}]}], ",", 
+        RowBox[{"zzboth", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"Table", "[", 
+            RowBox[{"i", ",", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", 
+               RowBox[{
+                RowBox[{"3", " ", "365"}], "+", "120"}], ",", 
+               RowBox[{
+                RowBox[{"3", " ", "365"}], "+", "330"}]}], "}"}]}], "]"}], ",", 
+           RowBox[{"Table", "[", 
+            RowBox[{"i", ",", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", 
+               RowBox[{
+                RowBox[{"4", " ", "365"}], "+", "120"}], ",", 
+               RowBox[{
+                RowBox[{"4", " ", "365"}], "+", "330"}]}], "}"}]}], "]"}]}], 
+          "]"}]}], ",", "freqMeBoth", ",", "posRel", ",", "posCon", ",", 
+        "Spillover", ",", 
+        RowBox[{"start", "=", 
+         RowBox[{
+          RowBox[{"2", " ", "365"}], "+", "150"}]}], ",", "Suppress", ",", 
+        "Output"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"-", "Import"}]}]}]}]}]}], " ", "coordinates", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"file", "--"}], "--"}], "--"}], "--"}], "--"}], 
+             "--"}], "--"}], "--"}], "--"}]}], "-"}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"coo", "=", 
+        RowBox[{"Import", "[", 
+         RowBox[{"CoordsFileName", ",", "\"\<Table\>\""}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"sites", "=", 
+        RowBox[{"Union", "[", 
+         RowBox[{"Flatten", "[", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{"Position", "[", 
+             RowBox[{
+              RowBox[{"coo", "[", 
+               RowBox[{"[", 
+                RowBox[{"All", ",", "4"}], "]"}], "]"}], ",", "4"}], "]"}], ",", 
+            RowBox[{"Join", "[", 
+             RowBox[{"Position", "[", 
+              RowBox[{
+               RowBox[{"coo", "[", 
+                RowBox[{"[", 
+                 RowBox[{"All", ",", "4"}], "]"}], "]"}], ",", "5"}], "]"}], 
+             "]"}]}], "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"ter", "=", 
+        RowBox[{"coo", "[", 
+         RowBox[{"[", 
+          RowBox[{"sites", ",", "6"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"pop", "=", 
+        RowBox[{"coo", "[", 
+         RowBox[{"[", 
+          RowBox[{"sites", ",", "3"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"rand", "=", 
+        RowBox[{"coo", "[", 
+         RowBox[{"[", 
+          RowBox[{"sites", ",", "5"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", "Import"}]}]}]}], " ", "data", " ", "for", " ", 
+         "simulation", " ", "without", " ", "drive", " ", "and", " ", "with", 
+         " ", 
+         RowBox[{
+          RowBox[{"drive", "--"}], "--"}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"WTloc", "=", 
+        RowBox[{"Partition", "[", 
+         RowBox[{
+          RowBox[{"Drop", "[", 
+           RowBox[{
+            RowBox[{"Import", "[", 
+             RowBox[{"NoDriveLocDataFileName", ",", "\"\<Table\>\""}], "]"}], 
+            ",", "2"}], "]"}], ",", "NumSites"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"loc", "=", 
+        RowBox[{"Partition", "[", 
+         RowBox[{
+          RowBox[{"Drop", "[", 
+           RowBox[{
+            RowBox[{"Import", "[", 
+             RowBox[{"DriveLocDataFileName", ",", "\"\<Table\>\""}], "]"}], ",",
+             "2"}], "]"}], ",", "NumSites"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"-", "compute"}]}]}]}]}]}]}]}]}]}], " ", "maximum",
+           " ", "pop", " ", "size", " ", "per", " ", "site", " ", "without", " ",
+           "drive"}], "-"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"max", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Max", "[", 
+           RowBox[{"WTloc", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"5", " ", "365"}], ";;", 
+               RowBox[{"6", " ", "365"}]}], ",", "ii", ",", "4"}], "]"}], 
+            "]"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"ii", ",", 
+            RowBox[{"Length", "[", 
+             RowBox[{"WTloc", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"1", " ", 
+           RowBox[{"<<", "day"}], " ", 
+           RowBox[{"<<", "2"}]}], ":", " ", 
+          RowBox[{
+           RowBox[{"<<", "pat"}], "+", 
+           RowBox[{"1", " ", 
+            RowBox[{"<<", "3"}]}]}], ":", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"<<", "patch_type"}], "[", "pat", "]"}], " ", 
+           RowBox[{"<<", "4"}]}], ":", " ", 
+          RowBox[{
+           RowBox[{"<<", "count"}], " ", 
+           RowBox[{"<<", "5"}]}], ":", " ", 
+          RowBox[{
+           RowBox[{"<<", "freq"}], 
+           RowBox[{"<<", 
+            RowBox[{"std", "::", "endl"}]}]}]}], ";"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", "compute"}]}]}], " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"spillovers", "--"}], "--"}], "--"}]}], "-"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"freqCor", "=", 
+        RowBox[{"loc", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "All", ",", "5"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", "Set"}]}]}], " ", "drive", " ", "freq", " ", "to", " ",
+           "1", " ", "where", " ", "the", " ", "pop", " ", "is", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"extinct", "--"}], "--"}], "--"}], "--"}], "--"}], 
+             "--"}], "--"}], "--"}]}], "-"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"loc", "[", 
+             RowBox[{"[", 
+              RowBox[{"time", ",", "site", ",", "4"}], "]"}], "]"}], "==", 
+            "0"}], ",", 
+           RowBox[{
+            RowBox[{"freqCor", "[", 
+             RowBox[{"[", 
+              RowBox[{"time", ",", "site"}], "]"}], "]"}], "=", "1"}]}], 
+          "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"time", ",", 
+           RowBox[{
+            RowBox[{"Dimensions", "[", "loc", "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"site", ",", 
+           RowBox[{
+            RowBox[{"Dimensions", "[", "loc", "]"}], "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", "mean"}]}]}]}]}]}]}]}]}], " ", "frequency", " ",
+           "in", " ", "year", " ", "1", " ", "per", " ", 
+          RowBox[{"site", "--"}]}], "-", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", "-"}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       
+       RowBox[{"freqMe1", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqCor", "[", 
+            RowBox[{"[", 
+             RowBox[{"zz1", ",", "site"}], "]"}], "]"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"site", ",", 
+            RowBox[{
+             RowBox[{"Dimensions", "[", "loc", "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", "mean"}]}]}]}]}]}]}]}]}], " ", "frequency", " ",
+           "in", " ", "year", " ", "2", " ", "per", " ", 
+          RowBox[{"site", "--"}]}], "-", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", "-"}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       
+       RowBox[{"freqMe2", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqCor", "[", 
+            RowBox[{"[", 
+             RowBox[{"zz2", ",", "site"}], "]"}], "]"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"site", ",", 
+            RowBox[{
+             RowBox[{"Dimensions", "[", "loc", "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", "mean"}]}]}]}]}]}]}]}]}], " ", "frequency", " ",
+           "in", " ", "both", " ", "years", " ", "per", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"site", "--"}], "--"}], "--"}], "--"}]}], "-", 
+         RowBox[{"--", "-"}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"freqMeBoth", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqCor", "[", 
+            RowBox[{"[", 
+             RowBox[{"zzboth", ",", "site"}], "]"}], "]"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"site", ",", 
+            RowBox[{
+             RowBox[{"Dimensions", "[", "loc", "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"-", "release"}]}]}]}]}], " ", "and", " ", "control", " ",
+           "positions", " ", "within", " ", "the", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"tables", "--"}], "--"}], "--"}], "--"}], "--"}]}], 
+         "-"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"posRel", "=", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"Position", "[", 
+          RowBox[{
+           RowBox[{"loc", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "All", ",", "3"}], "]"}], "]"}], ",", "5"}], 
+          "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"posCon", "=", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"Position", "[", 
+          RowBox[{
+           RowBox[{"loc", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "All", ",", "3"}], "]"}], "]"}], ",", "4"}], 
+          "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"--", 
+          RowBox[{"--", "mean"}]}], " ", "spillover", " ", "among", " ", 
+         "control", " ", "and", " ", "release", " ", "sites", " ", "and", " ",
+          "for", " ", "each", " ", "year", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"combination", "--"}], "--"}], "--"}]}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"Spillover", "=", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqMe1", "[", 
+            RowBox[{"[", "posCon", "]"}], "]"}], "]"}], ",", 
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqMe1", "[", 
+            RowBox[{"[", "posRel", "]"}], "]"}], "]"}], ",", 
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqMe2", "[", 
+            RowBox[{"[", "posCon", "]"}], "]"}], "]"}], ",", 
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqMe2", "[", 
+            RowBox[{"[", "posRel", "]"}], "]"}], "]"}], ",", 
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqMeBoth", "[", 
+            RowBox[{"[", "posCon", "]"}], "]"}], "]"}], ",", 
+          RowBox[{"Mean", "[", 
+           RowBox[{"freqMeBoth", "[", 
+            RowBox[{"[", "posRel", "]"}], "]"}], "]"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"-", "Compute"}]}]}]}]}], " ", "suppression", " ", "and",
+          " ", "make", " ", "suppression", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"file", "--"}], "--"}], "--"}], 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", "--"}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"Suppress", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"1.", " ", 
+           RowBox[{
+            RowBox[{"loc", "[", 
+             RowBox[{"[", 
+              RowBox[{"time", ",", "site", ",", "4"}], "]"}], "]"}], "/", 
+            RowBox[{"WTloc", "[", 
+             RowBox[{"[", 
+              RowBox[{"time", ",", "site", ",", "4"}], "]"}], "]"}]}]}], ",", 
+          
+          RowBox[{"{", 
+           RowBox[{"site", ",", 
+            RowBox[{"Length", "[", 
+             RowBox[{"loc", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"time", ",", "start", ",", 
+            RowBox[{"start", "+", 
+             RowBox[{"3", " ", "365"}]}], ",", "1"}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Output", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Flatten", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"loc", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"1", ",", "i", ",", "3"}], "]"}], "]"}], "==", 
+                "5"}], ",", "\"\<Rel\>\"", ",", "\"\<Con\>\""}], "]"}], ",", 
+             RowBox[{"pop", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], ",", 
+             RowBox[{"ter", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], ",", 
+             RowBox[{"max", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], ",", 
+             RowBox[{"rand", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], ",", 
+             RowBox[{"coo", "[", 
+              RowBox[{"[", 
+               RowBox[{
+                RowBox[{"sites", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"1", ",", "2"}], "}"}]}], "]"}], "]"}], ",", 
+             RowBox[{"Suppress", "[", 
+              RowBox[{"[", "i", "]"}], "]"}]}], "}"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", 
+            RowBox[{"Length", "[", 
+             RowBox[{"loc", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"--", 
+         RowBox[{"--", 
+          RowBox[{"--", 
+           RowBox[{"--", 
+            RowBox[{"--", 
+             RowBox[{"--", 
+              RowBox[{"--", 
+               RowBox[{"--", 
+                RowBox[{"--", 
+                 RowBox[{"--", 
+                  RowBox[{"--", 
+                   RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{"--", 
+                    RowBox[{
+                    "--", "-"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}\
+]}]}]}]}]}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{"OutputFile", ",", "Output"}], "]"}]}]}], "]"}]}], 
+   ";"}]}]], "Input",
+ CellChangeTimes->{{3.965198112620755*^9, 3.96519812381395*^9}, {
+   3.965198379077659*^9, 3.965198389700761*^9}, {3.965198434758502*^9, 
+   3.965198452342492*^9}, {3.965198504120075*^9, 3.965198504185397*^9}, {
+   3.965198542694761*^9, 3.965198548733337*^9}, {3.965198605957602*^9, 
+   3.965198611000929*^9}, 3.965198821202977*^9, {3.965198880866189*^9, 
+   3.96519889192416*^9}, 3.9658838911167793`*^9, {3.965884544370359*^9, 
+   3.965884561389085*^9}, {3.965885541121901*^9, 3.965885706603257*^9}, {
+   3.965885749317365*^9, 3.965885763887269*^9}, {3.965886108147805*^9, 
+   3.965886124688918*^9}, {3.9658862830946007`*^9, 3.965886342517935*^9}, {
+   3.965886390135293*^9, 3.965886415628433*^9}, {3.96588646448943*^9, 
+   3.965886467357548*^9}, 3.965886497390595*^9, {3.965887099930983*^9, 
+   3.965887140047511*^9}, {3.965887188649022*^9, 3.965887284237995*^9}, {
+   3.965887523546309*^9, 3.965887705644562*^9}, {3.96588778914208*^9, 
+   3.965887898937847*^9}, {3.965887929827689*^9, 3.965888184006854*^9}, {
+   3.9672655997914147`*^9, 3.9672656246514463`*^9}, 3.9798894224869537`*^9, 
+   3.9844680293250093`*^9, {3.984468265339088*^9, 3.984468271506392*^9}, 
+   3.991375718709178*^9, {3.9913757540546713`*^9, 3.991375754611247*^9}, {
+   3.991376861953113*^9, 3.99137686493736*^9}, {3.9913769916849737`*^9, 
+   3.991377072563469*^9}, {3.991377104772677*^9, 3.991377127024633*^9}, {
+   3.991377158869149*^9, 3.991377204503305*^9}, {3.991377238374793*^9, 
+   3.991377379226871*^9}, {3.991377421421569*^9, 3.991377622450509*^9}, {
+   3.991378219313324*^9, 3.9913783567152863`*^9}, {3.9913783912648687`*^9, 
+   3.991378671813603*^9}, {3.9913788298241577`*^9, 
+   3.991378833681917*^9}},ExpressionUUID->"49638fb1-3af7-480d-80a3-\
+99c8407338b3"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", 
+         RowBox[{"-", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"EXAMPLE", "--"}], "--"}], "--"}], "--"}], "--"}], 
+             "--"}], "--"}], "--"}]}]}]}]}]}], "-"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ProcessData", "[", 
+     RowBox[{
+      RowBox[{"\"\<../../InputData/CC_Set_24_0_disp\>\"", "<>", 
+       RowBox[{"ToString", "[", "3", "]"}], "<>", "\"\<.txt\>\""}], ",", 
+      RowBox[{"\"\<LocalData\>\"", "<>", 
+       RowBox[{"ToString", "[", 
+        RowBox[{"100", "+", "3"}], "]"}], "<>", "\"\<run1.txt\>\""}], ",", 
+      RowBox[{"\"\<LocalData\>\"", "<>", 
+       RowBox[{"ToString", "[", 
+        RowBox[{"10000", "+", "1000", " ", "+", 
+         RowBox[{"100", " ", "3"}]}], "]"}], "<>", "\"\<run1.txt\>\""}], ",", 
+      "24", ",", "\"\<TestOut103.csv\>\""}], "]"}], ";"}], "*)"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.965198112620755*^9, 3.96519812381395*^9}, {
+   3.965198379077659*^9, 3.965198389700761*^9}, {3.965198434758502*^9, 
+   3.965198452342492*^9}, {3.965198504120075*^9, 3.965198504185397*^9}, {
+   3.965198542694761*^9, 3.965198548733337*^9}, {3.965198605957602*^9, 
+   3.965198611000929*^9}, 3.965198821202977*^9, {3.965198880866189*^9, 
+   3.96519889192416*^9}, 3.9658838911167793`*^9, {3.965884544370359*^9, 
+   3.965884561389085*^9}, {3.965885541121901*^9, 3.965885706603257*^9}, {
+   3.965885749317365*^9, 3.965885763887269*^9}, {3.965886108147805*^9, 
+   3.965886124688918*^9}, {3.9658862830946007`*^9, 3.965886342517935*^9}, {
+   3.965886390135293*^9, 3.965886415628433*^9}, {3.96588646448943*^9, 
+   3.965886467357548*^9}, 3.965886497390595*^9, {3.965887099930983*^9, 
+   3.965887140047511*^9}, {3.965887188649022*^9, 3.965887284237995*^9}, {
+   3.965887523546309*^9, 3.965887705644562*^9}, {3.96588778914208*^9, 
+   3.965887898937847*^9}, {3.965887929827689*^9, 3.965888184006854*^9}, {
+   3.9672655997914147`*^9, 3.9672656246514463`*^9}, 3.9798894224869537`*^9, 
+   3.9844680293250093`*^9, {3.984468265339088*^9, 3.984468271506392*^9}, 
+   3.991375718709178*^9, {3.9913757540546713`*^9, 3.991375754611247*^9}, {
+   3.991376861953113*^9, 3.99137686493736*^9}, {3.9913769916849737`*^9, 
+   3.991377072563469*^9}, {3.991377104772677*^9, 3.991377127024633*^9}, {
+   3.991377158869149*^9, 3.991377204503305*^9}, {3.991377238374793*^9, 
+   3.991377379226871*^9}, {3.991377421421569*^9, 3.991377622450509*^9}, {
+   3.991378219313324*^9, 3.9913783567152863`*^9}, {3.9913783912648687`*^9, 
+   3.991378671813603*^9}, {3.991378797436355*^9, 
+   3.991378822465446*^9}},ExpressionUUID->"a21f367b-16f7-4abe-9f9e-\
+4de879dafc97"]
+},
+WindowSize->{1440, 833.25},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"14.3 for Linux x86 (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"df8cf411-0c06-4dbc-8499-98f2ec38e242"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 31926, 881, 1680, "Input",ExpressionUUID->"49638fb1-3af7-480d-80a3-99c8407338b3"],
+Cell[32483, 903, 2992, 58, 263, "Input",ExpressionUUID->"a21f367b-16f7-4abe-9f9e-4de879dafc97"]
+}
+]
+*)
+

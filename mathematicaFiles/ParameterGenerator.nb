@@ -1,0 +1,366 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     14980,        358]
+NotebookOptionsPosition[     14509,        342]
+NotebookOutlinePosition[     14930,        359]
+CellTagsIndexPosition[     14887,        356]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", " ", "Test"}]}]}]}], " ", "set", " ", "on", " ", 
+     "subset", " ", "of", " ", "coords", " ", "and", " ", "no", " ", "burn", " ",
+      "in"}], ",", " ", 
+    RowBox[{
+     RowBox[{"no", " ", "fitness", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"cost", " ", "--"}], "--"}], "--"}], "--"}]}], "-"}]}], 
+   "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+    "SetDirectory", "[", "\"\<~/Dropbox/FieldTrials/CRT/CRTModel/R1KE\>\"", 
+     "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"<<", "\"\<AlphasJan26\>\""}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rel", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"35", " ", "365"}], "+", "120", "+", "i"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "0", ",", "100", ",", "14"}], "}"}]}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<Rellist.csv\>\"", ",", "rel", ",", "\"\<CSV\>\"", ",", 
+      RowBox[{"\"\<TextDelimiters\>\"", "\[Rule]", "\"\<\>\""}]}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"dli", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"0.005", " ", 
+        RowBox[{"5", "^", "i"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", 
+         RowBox[{"-", "1"}], ",", "2", ",", ".5"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"xli", "=", 
+     RowBox[{"Range", "[", 
+      RowBox[{"0", ",", "0.8", ",", "0.1"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"numpatli", "=", 
+     RowBox[{"{", 
+      RowBox[{"9401", ",", "4483", ",", "9401"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"tab", "=", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"al0", "=", "20000"}], ";", 
+    RowBox[{"al1", "=", "100000"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"input", "=", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<../InputData/CC_Set_24_\>\"", "<>", 
+            RowBox[{"ToString", "[", "rep", "]"}], "<>", "\"\<_disp\>\"", "<>", 
+            RowBox[{"ToString", "[", "dd", "]"}], "<>", "\"\<.txt\>\""}], ",", 
+           RowBox[{"\"\<../InputData/CC_Set_12_\>\"", "<>", 
+            RowBox[{"ToString", "[", "rep", "]"}], "<>", "\"\<_disp\>\"", "<>", 
+            RowBox[{"ToString", "[", "dd", "]"}], "<>", "\"\<.txt\>\""}], ",", 
+           RowBox[{"\"\<../InputData/CC_Set_12B_\>\"", "<>", 
+            RowBox[{"ToString", "[", "rep", "]"}], "<>", "\"\<_disp\>\"", "<>", 
+            RowBox[{"ToString", "[", "dd", "]"}], "<>", "\"\<.txt\>\""}]}], 
+          "}"}], "[", 
+         RowBox[{"[", "size", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"pa", "=", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"numruns", "=", "1"}], ",", 
+           RowBox[{"maxT", "=", 
+            RowBox[{"39", " ", "365"}]}], 
+           RowBox[{"(*", 
+            RowBox[{"must", " ", "not", " ", "exceed", " ", "10585"}], "*)"}],
+            ",", 
+           RowBox[{"NumPat", "=", 
+            RowBox[{"numpatli", "[", 
+             RowBox[{"[", "size", "]"}], "]"}]}], ",", 
+           RowBox[{"muJ", "=", "0.05"}], ",", 
+           RowBox[{"muA", "=", "0.125"}], ",", 
+           RowBox[{"beta", "=", "100"}], ",", 
+           RowBox[{"theta", "=", "9"}], ",", 
+           RowBox[{"meanTL", "=", "0.0667"}], ",", 
+           RowBox[{"mindev", "=", "10"}], ",", 
+           RowBox[{"gamma", "=", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"1", "-", "0.95"}], ")"}], "/", "2"}]}], ",", 
+           RowBox[{"xiA", "=", 
+            RowBox[{"xli", "[", 
+             RowBox[{"[", "xx", "]"}], "]"}]}], ",", 
+           RowBox[{"eA", "=", "0.95"}], ",", 
+           RowBox[{"drivertime", "=", 
+            RowBox[{
+             RowBox[{"35", " ", "365"}], "+", "150"}]}], ",", 
+           RowBox[{"NumDriver", "=", "20000"}], ",", 
+           RowBox[{"NumDriverPat", "=", "1"}], ",", 
+           RowBox[{"d", "=", 
+            RowBox[{"dli", "[", 
+             RowBox[{"[", "dd", "]"}], "]"}]}], ",", 
+           RowBox[{"Ld", "=", 
+            RowBox[{"5", "/", "110."}]}], ",", 
+           RowBox[{"psi", "=", "0"}], ",", 
+           RowBox[{"muAES", "=", "0.9"}], ",", 
+           RowBox[{"thide1", "=", "300"}], ",", 
+           RowBox[{"thide2", "=", "350"}], ",", 
+           RowBox[{"twake1", "=", "140"}], ",", 
+           RowBox[{"twake2", "=", "170"}], ",", 
+           RowBox[{"al0li", "[", 
+            RowBox[{"[", 
+             RowBox[{"size", ",", "dd"}], "]"}], "]"}], ",", 
+           RowBox[{"al0var", "=", "0."}], ",", 
+           RowBox[{"al1li", "[", 
+            RowBox[{"[", 
+             RowBox[{"size", ",", "dd"}], "]"}], "]"}], " ", ",", 
+           RowBox[{"amp", "=", "0"}], ",", 
+           RowBox[{"resp", "=", "1"}], ",", 
+           RowBox[{"recstart", "=", "10"}], ",", 
+           RowBox[{"recend", "=", "maxT"}], ",", 
+           RowBox[{"recIntGlob", "=", "1"}], ",", 
+           RowBox[{"recIntLoc", "=", "1"}], ",", 
+           RowBox[{"recsitesfreq", "=", "1"}], ",", 
+           RowBox[{"set", "=", 
+            RowBox[{
+             RowBox[{"10000", "size"}], "+", 
+             RowBox[{"1000", " ", "xx"}], "+", 
+             RowBox[{"100", "dd"}], "+", "rep", "-", "1"}]}], ",", "\"\<e\>\"",
+            ",", "\"\<r\>\"", ",", 
+           RowBox[{"start", "=", 
+            RowBox[{
+             RowBox[{"33", " ", "365"}], "+", "1"}]}], ",", "input", 
+           ",", "\"\<../InputData/RainDailyAvAv.csv\>\"", 
+           ",", "\"\<Rellist.csv\>\"", 
+           ",", "\"\<../InputData/gamb_mortality_Jan26.csv\>\"", ",", 
+           RowBox[{"outputtype", "=", "3"}]}], "}"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"rep", "==", "1"}], ",", 
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"tab", ",", 
+           RowBox[{"{", 
+            RowBox[{"set", ",", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"\"\<24\>\"", ",", "\"\<12\>\"", ",", "\"\<12B\>\""}], 
+               "}"}], "[", 
+              RowBox[{"[", "size", "]"}], "]"}], ",", 
+             RowBox[{"xli", "[", 
+              RowBox[{"[", "xx", "]"}], "]"}], ",", 
+             RowBox[{"dli", "[", 
+              RowBox[{"[", "dd", "]"}], "]"}]}], "}"}]}], "]"}]}], "]"}], ";",
+        "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"i", "==", "1"}], ",", 
+           RowBox[{"Print", "[", 
+            RowBox[{"set", "/", "100"}], "]"}]}], "]"}], ";"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{
+         RowBox[{"\"\<./PPCC\>\"", "<>", 
+          RowBox[{"ToString", "[", "set", "]"}], "<>", "\"\<.csv\>\""}], ",", 
+         "pa", ",", "\"\<CSV\>\"", ",", 
+         RowBox[{"\"\<TextDelimiters\>\"", "\[Rule]", "\"\<\>\""}]}], "]"}]}],
+       ",", 
+      RowBox[{"{", 
+       RowBox[{"size", ",", "3"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"rep", ",", "100"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"xx", ",", 
+        RowBox[{"Length", "[", "xli", "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"dd", ",", 
+        RowBox[{"Length", "[", "dli", "]"}]}], "}"}]}], "]"}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.951908942994372*^9, 3.951908970241992*^9}, {
+   3.951909025269664*^9, 3.951909065381269*^9}, {3.95190912338381*^9, 
+   3.9519091598536177`*^9}, {3.951909380751206*^9, 3.951909404843982*^9}, {
+   3.951909517118174*^9, 3.9519095179988337`*^9}, 3.95190986207723*^9, {
+   3.951909968006304*^9, 3.951909980981821*^9}, {3.951910277466558*^9, 
+   3.951910279722426*^9}, {3.952425906429691*^9, 3.952425955123547*^9}, {
+   3.952426751214101*^9, 3.952426752818659*^9}, {3.952427344831711*^9, 
+   3.952427351426764*^9}, 3.964505747064052*^9, 3.964505836498124*^9, {
+   3.964506065588612*^9, 3.9645060722758083`*^9}, 3.964506176419954*^9, {
+   3.9657288015798903`*^9, 3.965728804747658*^9}, {3.966508423763596*^9, 
+   3.966508426454625*^9}, {3.966587273156388*^9, 3.96658731378812*^9}, {
+   3.967266407307454*^9, 3.967266407797784*^9}, {3.967266603794971*^9, 
+   3.967266604021446*^9}, {3.967625181029408*^9, 3.9676251814927187`*^9}, {
+   3.967625290229457*^9, 3.9676252994489098`*^9}, {3.9781704077682343`*^9, 
+   3.978170411535232*^9}, {3.978170878596696*^9, 3.978170890400509*^9}, 
+   3.978763448414164*^9, {3.978763613628414*^9, 3.97876361771732*^9}, {
+   3.978763738430635*^9, 3.978763741426017*^9}, {3.978763825256792*^9, 
+   3.9787638277244368`*^9}, {3.978763860121017*^9, 3.978763870255198*^9}, 
+   3.9787639916904488`*^9, {3.978764062309585*^9, 3.978764067883568*^9}, {
+   3.979889886843693*^9, 3.97988990477246*^9}, 3.979976614910263*^9, {
+   3.979976988019512*^9, 3.9799770047269373`*^9}, {3.9836820380673*^9, 
+   3.9836820795680037`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"9a46881b-7056-4581-b025-825270c446ff"],
+
+Cell[BoxData[
+ RowBox[{"\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"--", 
+       RowBox[{"--", 
+        RowBox[{"--", " ", "Now"}]}]}]}], " ", "set", " ", "WT", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"runs", " ", "--"}], "--"}], "--"}], "--"}]}], "-"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"setli", "=", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"input", "=", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<../InputData/CC_Set_24_0_disp\>\"", "<>", 
+            RowBox[{"ToString", "[", "dd", "]"}], "<>", "\"\<.txt\>\""}], ",", 
+           RowBox[{"\"\<../InputData/CC_Set_12_0_disp\>\"", "<>", 
+            RowBox[{"ToString", "[", "dd", "]"}], "<>", "\"\<.txt\>\""}], ",", 
+           RowBox[{"\"\<../InputData/CC_Set_12B_0_disp\>\"", "<>", 
+            RowBox[{"ToString", "[", "dd", "]"}], "<>", "\"\<.txt\>\""}]}], 
+          "}"}], "[", 
+         RowBox[{"[", "size", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"pa", "=", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"{", 
+          RowBox[{"numruns", ",", "maxT", ",", 
+           RowBox[{"numpatli", "[", 
+            RowBox[{"[", "size", "]"}], "]"}], ",", "muJ", ",", "muA", ",", 
+           "beta", ",", "theta", ",", "meanTL", ",", "mindev", ",", "gamma", ",",
+            "xiA", ",", "eA", ",", 
+           RowBox[{"drivertime", "=", 
+            RowBox[{
+             RowBox[{"25", " ", "365"}], "+", "150"}]}], ",", 
+           RowBox[{"NumDriver", "=", "0"}], ",", "NumDriverPat", ",", 
+           RowBox[{"d", "=", 
+            RowBox[{"dli", "[", 
+             RowBox[{"[", "dd", "]"}], "]"}]}], ",", "Ld", ",", "psi", ",", 
+           "muAES", ",", "thide1", ",", "thide2", ",", "twake1", ",", 
+           "twake2", ",", 
+           RowBox[{"al0li", "[", 
+            RowBox[{"[", 
+             RowBox[{"size", ",", "dd"}], "]"}], "]"}], ",", "al0var", ",", 
+           RowBox[{"al1li", "[", 
+            RowBox[{"[", 
+             RowBox[{"size", ",", "dd"}], "]"}], "]"}], ",", "amp", ",", 
+           "resp", ",", "recstart", ",", "recend", ",", "recIntGlob", ",", 
+           "recIntLoc", ",", "recsitesfreq", ",", 
+           RowBox[{"set", "=", 
+            RowBox[{
+             RowBox[{"100", " ", "size"}], "+", "dd"}]}], ",", "\"\<e\>\"", 
+           ",", "\"\<r\>\"", ",", "start", ",", "input", 
+           ",", "\"\<../InputData/RainDailyAvAv.csv\>\"", 
+           ",", "\"\<Rellist.csv\>\"", 
+           ",", "\"\<../InputData/gamb_mortality_Jan26.csv\>\"", ",", 
+           RowBox[{"outputtype", "=", "3"}]}], "}"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{
+         RowBox[{"\"\<./PPWT\>\"", "<>", 
+          RowBox[{"ToString", "[", "set", "]"}], "<>", "\"\<.csv\>\""}], ",", 
+         "pa", ",", "\"\<CSV\>\"", ",", 
+         RowBox[{"\"\<TextDelimiters\>\"", "\[Rule]", "\"\<\>\""}]}], "]"}], ";",
+        "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"setli", ",", "set"}], "]"}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"xx", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"dd", ",", 
+        RowBox[{"Length", "[", "dli", "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"size", ",", "3"}], "}"}]}], "]"}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.964505866850508*^9, 3.964505915013476*^9}, {
+   3.964505981036497*^9, 3.964506031426868*^9}, {3.964506166635672*^9, 
+   3.964506168967338*^9}, {3.964507014007477*^9, 3.964507104646342*^9}, {
+   3.9645071965596437`*^9, 3.96450720419711*^9}, 3.964507606552562*^9, 
+   3.964514021804604*^9, {3.965728793265164*^9, 3.96572879398604*^9}, {
+   3.965728844044232*^9, 3.965728950907532*^9}, {3.965729042122254*^9, 
+   3.965729048458878*^9}, 3.965729093535927*^9, {3.9658825530334167`*^9, 
+   3.965882574145383*^9}, {3.965882735754835*^9, 3.965882751829511*^9}, 
+   3.965882791596598*^9, {3.965882878419636*^9, 3.96588289379992*^9}, {
+   3.967266248464278*^9, 3.967266301633779*^9}, {3.967266514037444*^9, 
+   3.967266527721401*^9}, {3.96726663591357*^9, 3.967266639044553*^9}, {
+   3.978766783997478*^9, 3.978766794495697*^9}},
+ CellLabel->
+  "In[139]:=",ExpressionUUID->"d102ab8a-6ea1-4376-9936-ee899d5a0c82"]
+},
+WindowSize->{1440, 833.25},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.3 Inherited,
+FrontEndVersion->"14.3 for Linux x86 (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"9864f53d-7da0-4260-97a9-5a0c24ce846a"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 9422, 219, 809, "Input",ExpressionUUID->"9a46881b-7056-4581-b025-825270c446ff"],
+Cell[9983, 241, 4522, 99, 402, "Input",ExpressionUUID->"d102ab8a-6ea1-4376-9936-ee899d5a0c82"]
+}
+]
+*)
+
