@@ -3,6 +3,8 @@ Run/
 R1K/
 R1KB/
 R1KC/
+R1KD/
+R1KE/
 *.txt
 *.csv
 *.docx
@@ -10,3 +12,6 @@ figs/
 PennyFigs/
 TESTruns/
 mathematica/
+Animations/
+Spillover*
+src/README*
