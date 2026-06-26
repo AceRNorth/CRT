@@ -37,9 +37,10 @@ Record::Record(RecordParams* rec_params, int rep)
 	os3 << "CoordinateList" << set_label << "run" << rep_label << ".txt";
 	coord_list.open(os3.str());
 
-	local_data << "Male populations of each genotype at each site\n";
-	local_data << "Day" << "\t" << "Site" << "\t" << "WW" << "\t" << "WD" << "\t" << "DD" << "\t" << "WR" << "\t" << "RR" << "\t" << "DR" << std::endl;
+	local_data << "Female population at each site\n";
+	local_data << "Day" << "\t" << "Site" << "\t" << "Patch type" << "\t" << "biting females" << "\t" << "GD frequency" << std::endl;
 
+		//local_data << day << "\t" << pat+1 << "\t" << patch_type[pat] << "\t" << count << "\t" << freq<<std::endl;
 	global_data << "Total males of each genotype\n";
 	global_data << "Day" << "\t" << "WW" << "\t" << "WD" << "\t" << "DD" << "\t" << "WR" << "\t" << "RR" << "\t" << "DR" << std::endl;
 

@@ -1,5 +1,8 @@
 InputData/ObsFiles/
+InputData/output_files
+InputData/Out*
 Run/
+build/
 R1K/
 R1KB/
 R1KC/
@@ -14,4 +17,3 @@ TESTruns/
 mathematica/
 Animations/
 Spillover*
-src/README*
