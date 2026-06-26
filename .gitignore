@@ -5,8 +5,9 @@ R1KB/
 R1KC/
 R1KD/
 R1KE/
-*.txt
 *.docx
+Coo*
+CMake*
 figs/
 PennyFigs/
 TESTruns/
